@@ -26,13 +26,13 @@ if st.button("Generate Recipe"):
                 prompt += f" Make it a {cuisine_type} dish."
             
             try:
-                # Call Gemini AI
-                model = genai.GenerativeModel("gemini-pro")
+                # Use the correct Gemini model
+                model = genai.GenerativeModel("gemini-pro-latest")
                 response = model.generate_content(prompt)
                 
                 # Display the result
                 st.subheader("\U0001F37D\uFE0F Here's Your Recipe:")
-                st.write(response.text if response else "No response received. Try again.")
+                st.write(response.text if hasattr(response, 'text') else "No response received. Try again.")
             except Exception as e:
                 st.error(f"Error generating recipe: {e}")
     else:
@@ -41,5 +41,6 @@ if st.button("Generate Recipe"):
 # Footer
 st.markdown("---")
 st.markdown("\U0001F539 Built with \u2764\uFE0F using Streamlit & Google Gemini AI")
+
 
 
