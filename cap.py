@@ -1,8 +1,14 @@
 import streamlit as st
 import google.generativeai as genai
+import os
 
-# Configure API key
-genai.configure(api_key="AIzaSyDAn69hpc4jYH4z3QsflRB_aazoBvPQw4g")
+# Configure API key securely
+API_KEY = os.getenv("GEMINI_API_KEY")  # Set this in your environment variables
+if not API_KEY:
+    st.error("API key not found. Please set GEMINI_API_KEY as an environment variable.")
+    st.stop()
+
+genai.configure(api_key=API_KEY)
 
 # Streamlit UI
 st.set_page_config(page_title="AI Recipe Generator", page_icon="🍽️")
@@ -22,17 +28,21 @@ if st.button("Generate Recipe"):
             prompt = f"I have these ingredients: {ingredients}. Can you suggest a detailed recipe?"
             if cuisine_type != "Any":
                 prompt += f" Make it a {cuisine_type} dish."
-
-            # Call Gemini AI
-            model = genai.GenerativeModel("gemini-pro")
-            response = model.generate_content(prompt)
-
-            # Display the result
-            st.subheader("🍽️ Here's Your Recipe:")
-            st.write(response.text)
+            
+            try:
+                # Call Gemini AI
+                model = genai.GenerativeModel("gemini-pro")
+                response = model.generate_content(prompt)
+                
+                # Display the result
+                st.subheader("🍽️ Here's Your Recipe:")
+                st.write(response.text if response else "No response received. Try again.")
+            except Exception as e:
+                st.error(f"Error generating recipe: {e}")
     else:
         st.warning("Please enter some ingredients.")
 
 # Footer
 st.markdown("---")
 st.markdown("🔹 Built with ❤️ using Streamlit & Google Gemini AI")
+
