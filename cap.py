@@ -2,7 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 
 # Configure API key
-genai.configure(api_key="your_gemini_api_key")
+genai.configure(api_key="AIzaSyDAn69hpc4jYH4z3QsflRB_aazoBvPQw4g")
 
 # Streamlit UI
 st.set_page_config(page_title="AI Recipe Generator", page_icon="🍽️")
