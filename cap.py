@@ -1,25 +1,21 @@
 import streamlit as st
 import google.generativeai as genai
-import os
 
 # Configure API key securely
-API_KEY = os.getenv("GEMINI_API_KEY")  # Set this in your environment variables
-if not API_KEY:
-    st.error("API key not found. Please set GEMINI_API_KEY as an environment variable.")
-    st.stop()
+API_KEY = "AIzaSyDAn69hpc4jYH4z3QsflRB_aazoBvPQw4g"
 
 genai.configure(api_key=API_KEY)
 
 # Streamlit UI
-st.set_page_config(page_title="AI Recipe Generator", page_icon="🍽️")
-st.title("🍲 AI-Powered Recipe Generator")
+st.set_page_config(page_title="AI Recipe Generator", page_icon="\U0001F37D\uFE0F")
+st.title("\U0001F372 AI-Powered Recipe Generator")
 
 # Sidebar
 st.sidebar.header("Settings")
 cuisine_type = st.sidebar.selectbox("Choose Cuisine Type:", ["Any", "Indian", "Italian", "Chinese", "Mexican", "French"])
 
 # User input
-ingredients = st.text_area("🥕 Enter ingredients (comma-separated):")
+ingredients = st.text_area("\U0001F955 Enter ingredients (comma-separated):")
 
 if st.button("Generate Recipe"):
     if ingredients:
@@ -35,7 +31,7 @@ if st.button("Generate Recipe"):
                 response = model.generate_content(prompt)
                 
                 # Display the result
-                st.subheader("🍽️ Here's Your Recipe:")
+                st.subheader("\U0001F37D\uFE0F Here's Your Recipe:")
                 st.write(response.text if response else "No response received. Try again.")
             except Exception as e:
                 st.error(f"Error generating recipe: {e}")
@@ -44,5 +40,6 @@ if st.button("Generate Recipe"):
 
 # Footer
 st.markdown("---")
-st.markdown("🔹 Built with ❤️ using Streamlit & Google Gemini AI")
+st.markdown("\U0001F539 Built with \u2764\uFE0F using Streamlit & Google Gemini AI")
+
 
