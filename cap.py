@@ -6,19 +6,8 @@ API_KEY = "AIzaSyDAn69hpc4jYH4z3QsflRB_aazoBvPQw4g"
 
 genai.configure(api_key=API_KEY)
 
-# Get available models dynamically
-try:
-    available_models = [model.name for model in genai.list_models()]
-    if "gemini-pro" in available_models:
-        MODEL_NAME = "gemini-pro"
-    elif "gemini-pro-latest" in available_models:
-        MODEL_NAME = "gemini-pro-latest"
-    else:
-        st.error("No supported Gemini models found. Please check your API access.")
-        st.stop()
-except Exception as e:
-    st.error(f"Error fetching available models: {e}")
-    st.stop()
+# Manually set model name (Avoids fetching errors)
+MODEL_NAME = "gemini-pro"
 
 # Streamlit UI
 st.set_page_config(page_title="AI Recipe Generator", page_icon="\U0001F37D\uFE0F")
@@ -55,3 +44,4 @@ if st.button("Generate Recipe"):
 # Footer
 st.markdown("---")
 st.markdown("\U0001F539 Built with \u2764\uFE0F using Streamlit & Google Gemini AI")
+
