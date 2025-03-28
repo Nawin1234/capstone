@@ -5,10 +5,11 @@ import google.generativeai as genai
 API_KEY = "AIzaSyDAn69hpc4jYH4z3QsflRB_aazoBvPQw4g"
 genai.configure(api_key=API_KEY)
 
-# Get available models dynamically
+# Choose the correct model based on available models
 try:
-    available_models = [model.name for model in genai.list_models()]
-    MODEL_NAME = "gemini-1.5-pro-latest" if "gemini-1.5-pro-latest" in available_models else "gemini-1.5-pro"
+    available_models = [model.name for model in genai.GenerativeModel.list()]
+    MODEL_NAME = "models/gemini-1.5-pro-latest" if "models/gemini-1.5-pro-latest" in available_models else "models/gemini-1.5-pro"
+    
     if MODEL_NAME not in available_models:
         st.error(f"No supported Gemini models found. Available models: {available_models}")
         st.stop()
@@ -48,5 +49,4 @@ if st.button("Generate Recipe"):
 # Footer
 st.markdown("---")
 st.markdown("🔹 Built with ❤️ using Streamlit & Google Gemini AI")
-
 
