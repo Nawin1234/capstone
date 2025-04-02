@@ -1,13 +1,13 @@
 import streamlit as st
 import google.generativeai as genai
 
-# Configure API key
+# Configure API key (Avoid hardcoding API keys in production)
 API_KEY = "AIzaSyDAn69hpc4jYH4z3QsflRB_aazoBvPQw4g"
 genai.configure(api_key=API_KEY)
 
-# Choose the correct model based on available models
+# Fetch available models
 try:
-    available_models = [model.name for model in genai.GenerativeModel.list()]
+    available_models = [model.name for model in genai.list_models()]
     MODEL_NAME = "models/gemini-1.5-pro-latest" if "models/gemini-1.5-pro-latest" in available_models else "models/gemini-1.5-pro"
     
     if MODEL_NAME not in available_models:
@@ -36,7 +36,7 @@ if st.button("Generate Recipe"):
                 prompt += f" Make it a {cuisine_type} dish."
             
             try:
-                model = genai.GenerativeModel(MODEL_NAME)
+                model = genai.GenerativeModel(model_name=MODEL_NAME)
                 response = model.generate_content(prompt)
                 
                 st.subheader("🍽️ Here's Your Recipe:")
@@ -49,4 +49,5 @@ if st.button("Generate Recipe"):
 # Footer
 st.markdown("---")
 st.markdown("🔹 Built with ❤️ using Streamlit & Google Gemini AI")
+
 
